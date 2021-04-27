@@ -53,7 +53,7 @@ class BooksController < ApplicationController
 
   private
   def book_params
-    params.permit(:title, :body)
+    params.permit(:title, :body,)
   end
 
   def user_params
