@@ -1,0 +1,2 @@
+class CreateBook < ApplicationRecord
+end

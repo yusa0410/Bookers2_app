@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bookers2</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+   <body class="header">
+    <header class="navbar navbar-fixed-top navbar-inverse bg-dark">
+      <div class="container">
+        <nav class="nav navbar-left">
+            <span class="title">Bookers</span>
+        </nav>
+        <nav>
+         <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+            <li><%= link_to "Home", user_path(current_user.id),class:"glyphicon glyphicon-home" %></li>
+            <li><%= link_to "Users", "/users",class:"glyphicon glyphicon-user" %></li>
+            <li><%= link_to "Books", "/books",class:"glyphicon glyphicon-book" %></li>
+            <li><%= link_to "log out", destroy_user_session_path,class:" glyphicon  glyphicon-log-out",method: :delete %></li>
+
+          <% else %>
+            <li><%= link_to"Home",root_path,class:"glyphicon glyphicon-home" %></li>
+            <li><%= link_to"About","/home/about",class:"glyphicon glyphicon-link" %></li>
+            <li><%= link_to"Sign up", "/users/sign_up",class:"glyphicon glyphicon-edit sign_up" %></li>
+            <li><%= link_to"login", "/users/sign_in",  class:"glyphicon glyphicon-log-in" %></li>
+          <% end %>
+        </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div class="body">
+      <p class="notice"><%= notice %></p>
+
+      <%= yield %>
+
+
+        <footer>
+          <div class="container">
+            <div class="row">
+              <div class='col-xs-4 col-xs-offset-1'>
+                <p>CopyRight Infratop.inc</p>
+              </div>
+            </div>
+          </div>
+        </footer>
+
+      </div>
+    </div>
+  </body>
+</html>
