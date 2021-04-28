@@ -1,4 +1,17 @@
-<div class="box">
+<% if @book.errors.any? %>
+  <div class="error_explanation">
+    <h3><%= @book.errors.count %>errors prohibited this book from being saved:</h3>
+      <% @book.errors.full_messages.each do |message| %>
+        <ul>
+          <li><%= message %></li>
+        </ul>
+      <% end %>
+  </div>
+<% end %>
+
+<div class="container">
+<div class="row">
+<div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
 
 <h1>Editing Book</h1>
 <%= form_with model:@book, local:true do |f| %>
@@ -10,10 +23,12 @@
     <%= f.text_area :body,class:"col-xs-12" %>
 
   <nav>
-     <%= f.submit 'Update Book',class: "col-xs-12 btn btn-primary" %>
+     <%= f.submit 'Update Book',class: "btn btn-success" %>
   </nav>
 　<% end %>
-<%= link_to "show",book_path(@book.id)%>
+<%= link_to "Show",book_path(@book.id)%>
 <%= link_to "Back",books_path %>
 
+</div>
+</div>
 </div>
