@@ -1,26 +1,3 @@
-<div class="container px-5 px-sm-0">
-    <div class="row">
-       <div class="col-md-3">
-
-       <%= render 'users/list', user: @user %>
-       
-       
-
-    <%= form_with model:@book, url:"/books", local:true do |f| %>
-
-        <h2>New book</h2>
-        <h4>Title</h4>
-        <%= f.text_field :title,class: "col-xs-12" %>
-
-        <h4>Opinion</h4>
-        <%= f.text_field :body,class: "col-xs-12" %>
-        <nav>
-
-        <%= f.submit 'Create Book',class: "col-xs-12 btn btn-primary" %>
-        </nav>
-        <% end %>
-       </div>
-
 <div class="col-xs-9">
   <h2>User followers</h2>
   <table class="table">
@@ -37,15 +14,13 @@
 	<% @followers.each do |user| %>
 	<tr>
     <td><%= attachment_image_tag(user, :profile_image, size:'100x100', fallback: "no-image-mini.jpg") %></td>
+    
     <td><%= user.name %></td>
 
     <td><%= user.followings.count %></td>
 
-    <td><%= user.reverse_of_relationships.count %></td>
+    <td><%= user.followers.count %></td>
 
-    <td><%= render 'relationships/follow_button', user: user %></td>
-
-    <td><%= link_to "Show", user, class: "user_#{user.id}" %></td>
 	</tr>
 	<% end %>
     </tbody>

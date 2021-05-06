@@ -12,17 +12,24 @@ class User < ApplicationRecord
   # ==============追加フォロー================
 
   has_many :followers, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy, inverse_of: :follower
-  has_many :followings, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy, inverse_of: :followed
+  has_many :followings, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy, inverse_of: :followed
 
   has_many :following_users, through: :followers, source: :followed
   has_many :follower_users, through: :followings, source: :follower
 
-  def follow(user_id)
-    followers.create(followed_id: user_id)
+  def follow(other_user)
+    unless self == other_user
+      self.followings.find_or_create_by(follower_id: other_user.id)
+    end
   end
 
-  def following?(user)
-    following_users.include?(user)
+  def unfollow(other_user)
+    relationship = self.followeings.find_by(follower_id: other_user.id)
+    relationship.destroy if relationship
+  end
+
+  def following?(other_user)
+    self.follower_users.include?(other_user)
   end
 
   # ==============追加フォロー================

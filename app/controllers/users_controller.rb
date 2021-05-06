@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :ensure_current_user, {only: [:edit,:update,:destroy]}
-  before_action :set_user
+ 
 
   def show
     @user = User.find(params[:id])
     @books = Book.all
     @book = Book.new
-    @relationship = @user.followings.find_by(follower_id: current_user.id)
+    @relationship = @user.followings.find_by(follower_id: current_user.id)  #追加フォロー機能
   end
 
   def index
@@ -35,10 +35,12 @@ class UsersController < ApplicationController
   # ==============追加フォロー================
 
   def follows
+    @user = User.find(params[:id])
     @followings = @user.following_users
   end
 
   def followers
+    @user = User.find(params[:id])
     @followers = @user.follower_users
   end
 
@@ -60,8 +62,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def set_user
-    @user = User.find(params[:id])
-  end
+  
 
 end
