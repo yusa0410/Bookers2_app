@@ -1,6 +1,7 @@
 <div class="col-xs-9">
-  <h2>User followers</h2>
-  <table class="table">
+<h2>Follower Users</h2>または<h2>Follow Users</h2>
+<% if @users.exists? %>
+ <table class="table">
   <thead>
     <tr>
       <th>image</th>
@@ -8,23 +9,20 @@
       <th>follows</th>
       <th>followers</th>
       <th colspan="5"></th>
-	</tr>
-    </thead>
-    <tbody>
-	<% @followers.each do |user| %>
-	<tr>
-    <td><%= attachment_image_tag(user, :profile_image, size:'100x100', fallback: "no-image-mini.jpg") %></td>
-    
-    <td><%= user.name %></td>
-
-    <td><%= user.followings.count %></td>
-
-    <td><%= user.followers.count %></td>
-
-	</tr>
-	<% end %>
-    </tbody>
-  </table>
-  </div>
-  </div>
-</div> 
+    </tr>
+  </thead>
+  <tbody>
+   <% @followers.each do |user| %>
+      <tr>
+        <td><%= attachment_image_tag(user, :profile_image, size:'100x100', fallback: "no-image-mini.jpg") %></td>
+        <td><%= user.name %></td>
+        <td>フォロー数: <%= user.followings.count %></td>
+        <td>フォロワー数: <%= user.followers.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+  <p>ユーザーはいません</p>
+<% end %>
+</div>
