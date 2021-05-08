@@ -6,13 +6,15 @@ Rails.application.routes.draw do
     resources :book_comments, only: [:create, :destroy]
   end
 
-   # ==============追加フォロー================ 
+   # ==============追加フォロー================
   resources :users,only: [:show,:index,:edit,:update] do
     resource :relationships, only: [:create, :destroy]
-    get :follows, on: :member 
-    get :followers, on: :member 
+    get :follows, on: :member
+    get :followers, on: :member
   end
   # ==============追加フォロー================
+
+  get "search" => "searches#search" #検索機能
 
   resources :users,only:[:show,:edit,:update,:index]
   get "home/about" => "homes#about"
