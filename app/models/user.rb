@@ -11,25 +11,28 @@ class User < ApplicationRecord
 
   # ==============追加フォロー================
 
-  has_many :followers, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy, inverse_of: :follower
-  has_many :followings, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy, inverse_of: :followed
+  has_many :followers, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy, inverse_of: :follower
+  has_many :followings, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy, inverse_of: :followed
 
-  has_many :following_users, through: :followers, source: :followed
-  has_many :follower_users, through: :followings, source: :follower
+  has_many :following_users, through: :followings, source: :followed
+  has_many :follower_users, through: :followers, source: :follower
 
   def follow(other_user)
-    unless self == other_user
-      self.followings.find_or_create_by(follower_id: other_user.id)
-    end
+    #unless self == other_user
+      #if self.followings.exists?(followed_id: other_user.id)
+        Relationship.create(follower_id: id, followed_id: other_user.id)
+      #end
+      #self.followings.find_or_create_by(followed_id: other_user.id)
+    #end
   end
 
   def unfollow(other_user)
-    relationship = self.followeings.find_by(follower_id: other_user.id)
+    relationship = self.followings.find_by(followed_id: other_user.id)
     relationship.destroy if relationship
   end
 
   def following?(other_user)
-    self.follower_users.include?(other_user)
+    self.following_users.include?(other_user)
   end
 
   # ==============追加フォロー================
